@@ -86,6 +86,9 @@ class UI:
         new_in=self.getFromFileTest()
         new_out=self.getOutFromFileTest()
         acc=0
+        slumpAcc=0
+        flowAcc=0
+        stAcc=0
         predictions=[]
         for index in range(len(new_in)):
             p=[]
@@ -103,6 +106,8 @@ class UI:
             p.append(res1[0][0])
             if(self.checkAcc(res1[0][0],new_out[index][0])):
                 acc=acc+1
+            if (self.checkAcc(res1[0][0], new_out[index][0])):
+                slumpAcc = slumpAcc + 1
 
             print("FLOW(cm)")
             print(res2[0][0])
@@ -111,6 +116,8 @@ class UI:
             p.append(res2[0][0])
             if (self.checkAcc(res2[0][0], new_out[index][1])):
                 acc = acc + 1
+            if (self.checkAcc(res2[0][0], new_out[index][1])):
+                flowAcc = flowAcc + 1
 
             print("Compressive Strength (28-day)(Mpa)")
             print(res3[0][0])
@@ -119,13 +126,21 @@ class UI:
             p.append(res3[0][0])
             if (self.checkAcc(res3[0][0], new_out[index][2])):
                 acc = acc + 1
+            if (self.checkAcc(res3[0][0], new_out[index][2])):
+                stAcc = stAcc + 1
             predictions.append(p)
         print("Accuracy:",acc/(len(new_in)*3))
+        print("Slump Accuracy:", slumpAcc / len(new_in))
+        print("Flow Accuracy:", flowAcc / len(new_in))
+        print("Strength Accuracy:", stAcc / len(new_in))
         return predictions
     def runMethod2(self):
         new_in=self.getFromFileTest()
         new_out=self.getOutFromFileTest()
         acc=0
+        slumpAcc = 0
+        flowAcc = 0
+        stAcc = 0
         predictions=[]
         for index in range(len(new_in)):
             p=[]
@@ -147,7 +162,8 @@ class UI:
             p.append(res1)
             if (self.checkAcc(res1, new_out[index][0])):
                 acc = acc + 1
-
+            if (self.checkAcc(res1, new_out[index][0])):
+                slumpAcc = slumpAcc + 1
 
             print("FLOW(cm)")
             print(res2)
@@ -156,6 +172,8 @@ class UI:
             p.append(res2)
             if (self.checkAcc(res2, new_out[index][1])):
                 acc = acc + 1
+            if (self.checkAcc(res2, new_out[index][1])):
+                flowAcc = flowAcc + 1
 
             print("Compressive Strength (28-day)(Mpa)")
             print(res3)
@@ -164,13 +182,21 @@ class UI:
             p.append(res3)
             if (self.checkAcc(res3, new_out[index][2])):
                 acc = acc + 1
+            if (self.checkAcc(res3, new_out[index][2])):
+                stAcc = stAcc + 1
             predictions.append(p)
         print("Accuracy:", acc / (len(new_in) * 3))
+        print("Slump Accuracy:", slumpAcc / len(new_in))
+        print("Flow Accuracy:", flowAcc / len(new_in))
+        print("Strength Accuracy:", stAcc / len(new_in))
         return predictions
     def runMethod3(self):
         new_in=self.getFromFileTest()
         new_out=self.getOutFromFileTest()
         acc=0
+        slumpAcc = 0
+        flowAcc = 0
+        stAcc = 0
         predicitons=[]
         for index in range(len(new_in)):
             p=[]
@@ -191,7 +217,8 @@ class UI:
             p.append(res1[0][0])
             if (self.checkAcc(res1[0][0], new_out[index][0])):
                 acc = acc + 1
-
+            if (self.checkAcc(res1[0][0], new_out[index][0])):
+                slumpAcc = slumpAcc + 1
 
             print("FLOW(cm)")
             print(res2[0][0])
@@ -200,6 +227,8 @@ class UI:
             p.append(res2[0][0])
             if (self.checkAcc(res2[0][0], new_out[index][1])):
                 acc = acc + 1
+            if (self.checkAcc(res2[0][0], new_out[index][1])):
+                flowAcc = flowAcc + 1
 
             print("Compressive Strength (28-day)(Mpa)")
             print(res3[0][0])
@@ -208,8 +237,13 @@ class UI:
             p.append(res3[0][0])
             if (self.checkAcc(res3[0][0], new_out[index][2])):
                 acc = acc + 1
+            if (self.checkAcc(res3[0][0], new_out[index][2])):
+                stAcc = stAcc + 1
             predicitons.append(p)
         print("Accuracy:", acc / (len(new_in) * 3))
+        print("Slump Accuracy:", slumpAcc / len(new_in))
+        print("Flow Accuracy:", flowAcc / len(new_in))
+        print("Strength Accuracy:", stAcc / len(new_in))
         return predicitons
     def calculateEstimate(self,w,first,second,third):
         total = w[0] + w[1] + w[2]
@@ -225,26 +259,26 @@ class UI:
             print("Our prediction:\n")
             print("SLUMP(cm)")
             a=self.calculateEstimate(weights,predictions1[index][0],predictions2[index][0],predictions3[index][0])
-            print(a)
+            print(predictions3[index][0])
             print("Real result: ")
             print(new_out[index][0])
-            if (self.checkAcc(a, new_out[index][0])):
+            if (self.checkAcc(predictions3[index][0], new_out[index][0])):
                 acc = acc + 1
 
             print("FLOW(cm)")
             b = self.calculateEstimate(weights, predictions1[index][1], predictions2[index][1], predictions3[index][1])
-            print(b)
+            print(predictions2[index][1])
             print("Real result: ")
             print(new_out[index][1])
-            if (self.checkAcc(b, new_out[index][1])):
+            if (self.checkAcc(predictions2[index][1], new_out[index][1])):
                 acc = acc + 1
 
             print("Compressive Strength (28-day)(Mpa)")
             c = self.calculateEstimate(weights, predictions1[index][2], predictions2[index][2], predictions3[index][2])
-            print(c)
+            print(predictions3[index][2])
             print("Real result: ")
             print(new_out[index][2])
-            if (self.checkAcc(c, new_out[index][2])):
+            if (self.checkAcc(predictions3[index][2], new_out[index][2])):
                 acc = acc + 1
         print("Final Accuracy:", acc / (len(predictions1) * 3))
     def run(self):
